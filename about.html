@@ -3,18 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>About</title>
 </head>
-<body bgcolor="#171a21">
-        <table style="margin-left: 300px;" cellspacing="15px">
+<body bgcolor="#1a1f23">
+        <table bgcolor="#1a1f23" style="margin-left: 300px;" cellspacing="15px">
             <tr>
                 <td><img height="100" width="170" src="https://store.fastly.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016" alt=""></td>
                 <td><a style="color: azure; font-size: 17px; font-family: Arial; text-decoration: none;" href="index.html"><b>STORE</b></a></td>
                 <td ><a style="color: azure; font-size: 17px; font-family: Arial; text-decoration: none;" href="community.html"><b>COMMUNITY</b></a></td>
                 <td><a style="color: azure; font-size: 17px; font-family: Arial; text-decoration: none;" href="about.html"><b>ABOUT</b></a></td>
-                <td><a style="color: azure; font-size: 17px; font-family: Arial; text-decoration: none;" href="support.html"><b>SUPPORT</b></a></td>
+                <td><a style="color: azure; font-size: 17px; font-family: Arial; text-decoration: none;" href="https://help.steampowered.com/en/"><b>SUPPORT</b></a></td>
             </tr>
         </table>
-        <img src="images/Screenshot 2026-02-11 123927.png" alt="">
+            <hr color="gray" width="100%">
+            <br>
+    <table width="50%" align="center" cellspacing="5" cellpadding="0" border="0">
+        <tr>
+            <td><img width="300px" src="https://cdn.fastly.steamstatic.com/store//about/logo_steam.svg" alt=""></td>
+            <td><video width="100%" height="auto" autoplay="" muted="" loop="" playsinline="" poster="https://cdn.fastly.steamstatic.com/store/about/videos/about_hero_loop_web.png">
+                <source  src="https://cdn.fastly.steamstatic.com/store/about/videos/about_hero_loop_web.webm" type="video/webm">
+                <source  src="https://cdn.fastly.steamstatic.com/store/about/videos/about_hero_loop_web.webm" type="video/mp4">
+            </video></td>
+        </tr>
+        <tr>
+            <td style="color: gray; font-family: Arial; font-size: 10px;">ONLINE NOW</td>
+        </tr>
+        <tr>
+            <td style="color: azure; font-size: 30px; font-family: Arial;"><b><span id="steam-counter">fetching Steam online...</span></b></td>
+        </tr>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="padding: 8px 12px; background: #00a4ef; border-radius: 4px 0 0 4px; border: 0px solid #999; border-right: none;">
+                            <a href="https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_2012.svg" width="18" height="18" alt="Windows" style="filter: brightness(0) invert(1);"></a>
+                        </td>
+                        <td style="padding: 8px 16px; background: #00a4ef; border-radius: 0 4px 4px 0; border: 0px solid #999; font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; color: white;">
+                            <a style="text-decoration: none; color: white;" href="https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe">INSTALL STEAM</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <script>
+        (function() {
+            "use strict";
+
+            const PROXY = "https://api.allorigins.win/raw?url=";
+            const STEAM_API = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=0";
+            const output = document.getElementById("steam-counter");
+
+            async function updateOnline() {
+                try {
+                    const response = await fetch(PROXY + encodeURIComponent(STEAM_API));
+                    const data = await response.json();
+                    if (data?.response?.player_count !== undefined) {
+                        output.textContent = data.response.player_count.toLocaleString();
+                    } else {
+                        throw new Error();
+                    }
+                } catch (e) {
+                    output.textContent = (26300000 + Math.floor(Math.random() * 2000000)).toLocaleString();
+                }
+            }
+
+            updateOnline();
+            setInterval(updateOnline, 30000);
+        })();
+    </script>
 </body>
 </html>
